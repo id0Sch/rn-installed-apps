@@ -2,6 +2,7 @@
 package com.reactlibrary;
 
 import android.content.pm.PackageInfo;
+import android.content.pm.ApplicationInfo;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -36,7 +37,9 @@ public class RNInstalledAppsModule extends ReactContextBaseJavaModule {
 
         List<String> ret = new ArrayList<>();
         for (final PackageInfo p: packages) {
-            ret.add(p.packageName);
+            if ((p.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+                ret.add(p.packageName);
+            }
         }
         return ret;
     }
