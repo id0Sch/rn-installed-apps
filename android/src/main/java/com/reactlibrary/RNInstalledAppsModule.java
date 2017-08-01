@@ -42,7 +42,7 @@ public class RNInstalledAppsModule extends ReactContextBaseJavaModule {
         return ret;
     }
 
-    private getNonSystemApps<String> getApps() {
+    private List<String> getNonSystemApps() {
         List<PackageInfo> packages = this.reactContext
             .getPackageManager()
             .getInstalledPackages(0);
