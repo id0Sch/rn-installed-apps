@@ -37,18 +37,31 @@ public class RNInstalledAppsModule extends ReactContextBaseJavaModule {
 
         List<String> ret = new ArrayList<>();
         for (final PackageInfo p: packages) {
+            ret.add(p.packageName);
+        }
+        return ret;
+    }
+
+    private getNonSystemApps<String> getApps() {
+        List<PackageInfo> packages = this.reactContext
+            .getPackageManager()
+            .getInstalledPackages(0);
+
+        List<String> ret = new ArrayList<>();
+        for (final PackageInfo p: packages) {
             if ((p.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                 ret.add(p.packageName);
             }
         }
         return ret;
-    }
-
+    } 
+    
     @Override
     public @Nullable Map<String, Object> getConstants() {
         Map<String, Object> constants = new HashMap<>();
 
         constants.put("getApps", getApps());
+        constants.put("getNonSystemApps", getNonSystemApps());
         return constants;
     }
 }
